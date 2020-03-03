@@ -3,18 +3,19 @@ package com.example.azimutlab.mvp.view.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.azimutlab.R
+import com.example.azimutlab.mvp.models.PostModel
 import com.example.azimutlab.mvp.view.interfaces.MainActivityView
 
 class MainActivity : BaseActivity(), MainActivityView {
-    override fun failedGetData() {
+    override fun failedGetData(msg:String) {
 
     }
 
-    override fun successGetData() {
+    override fun successGetData(list:List<PostModel>) {
 
     }
 
-    override fun loadingData() {
+    override fun loadingData(loading:Boolean) {
 
     }
 

@@ -77,4 +77,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
     implementation 'com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
+
+    // rxandroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 }
