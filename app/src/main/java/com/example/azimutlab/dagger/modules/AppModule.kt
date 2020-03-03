@@ -45,5 +45,9 @@ class AppModule {
     fun provideRxAdapter(): RxJava2CallAdapterFactory {
         return RxJava2CallAdapterFactory.create()
     }
+    @Provides
+    fun provideOkHttpClient():OkHttpClient{
+        return OkHttpClient.Builder().build()
+    }
 
 }
