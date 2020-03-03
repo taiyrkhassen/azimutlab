@@ -16,6 +16,7 @@ import com.google.gson.Gson
 
 @InjectViewState
 class MainPresenter @Inject constructor() : BasePresenter<MainActivityView>() {
+
     init {
         DaggerServiceComponent.builder()
             .appComponent(AzimutApp.getApplicationComponent())
@@ -25,7 +26,6 @@ class MainPresenter @Inject constructor() : BasePresenter<MainActivityView>() {
 
     @Inject
     lateinit var mainRepo: MainRepository
-
     @Inject
     lateinit var mContext: Context
 

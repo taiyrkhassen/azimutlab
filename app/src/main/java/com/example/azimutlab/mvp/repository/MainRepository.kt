@@ -14,19 +14,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class MainRepository(context: Context, private var apiService: ApiService) {
+
     var mContext:Context = context
-    //    init {
-//        DaggerServiceComponent.builder()
-//            .appComponent(AzimutApp.getApplicationComponent())
-//            .build()
-//            .inject(this)
-//    }
-//
-//    @Inject
-//    lateinit var apiService: ApiService
-//
-//    @Inject
-//    lateinit var mContext: Context
 
     @SuppressLint("CheckResult")
     fun getPosts(): Observable<List<PostModel>> {

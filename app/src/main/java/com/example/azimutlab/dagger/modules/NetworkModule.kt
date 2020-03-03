@@ -48,8 +48,6 @@ class NetworkModule {
         return logging
     }
 
-
-
     @Provides
     fun okHttpClient(
         interceptor: Interceptor,
