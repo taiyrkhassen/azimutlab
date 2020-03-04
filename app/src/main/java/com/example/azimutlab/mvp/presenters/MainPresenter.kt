@@ -30,7 +30,14 @@ class MainPresenter @Inject constructor() : BasePresenter<MainActivityView>() {
     lateinit var mContext: Context
 
     fun getPosts() {
+
+        if (!isConnectedToInternet()) {
+            viewState.noInternetConnection()
+            return
+        }
+
         viewState.loadingData(true)
+
         disposables.add(
             mainRepo.getPosts()
                 .subscribeOn(Schedulers.io())

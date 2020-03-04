@@ -3,6 +3,7 @@ package com.example.azimutlab.mvp.view.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.azimutlab.R
 import com.example.azimutlab.adapters.DataListAdapter
 import com.example.azimutlab.mvp.models.PostModel
@@ -22,10 +23,10 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override fun successGetData(list:List<PostModel>) {
-        //set list to adapter
-        //set adapter to recycler
-        //progress bar gone
         list_data.visibility = View.VISIBLE
+        list_data.layoutManager = LinearLayoutManager(this)
+        adapter.addDataList(list as ArrayList<PostModel>)
+        list_data.adapter = adapter
     }
 
     override fun loadingData(loading:Boolean) {
