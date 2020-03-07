@@ -7,6 +7,7 @@ import com.example.azimutlab.Constants
 import com.example.azimutlab.custom_errors.NoInternetException
 import com.example.azimutlab.helpers.PreferenceHelper
 import com.example.azimutlab.dagger.components.DaggerServiceComponent
+import com.example.azimutlab.helpers.NoInternetConnectInterceptor
 import com.example.azimutlab.mvp.models.PostModel
 import com.example.azimutlab.mvp.repository.MainRepository
 import com.example.azimutlab.mvp.view.interfaces.MainActivityView
@@ -21,6 +22,8 @@ class MainPresenter : BasePresenter<MainActivityView>() {
 
     @Inject
     lateinit var mainRepo:MainRepository
+
+    //https://jsonplaceholder.typicode.com/posts/1
 
     init {
         DaggerServiceComponent.builder()

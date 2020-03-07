@@ -13,6 +13,5 @@ import dagger.Component
 interface ServiceComponent {
     fun inject(presenter: MainPresenter)
     fun inject(repository: MainRepository)
-    fun inject(activity: MainActivity)
     fun getApiService():ApiService
 }

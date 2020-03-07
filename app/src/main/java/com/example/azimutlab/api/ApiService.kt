@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface ApiService{
 
-    @GET("/{post_id}/posts/")
+    @GET("/posts/{post_id}/")
     fun getPostsJson(
         @Path("post_id") post_id: Int
     ):Observable<List<PostModel>>

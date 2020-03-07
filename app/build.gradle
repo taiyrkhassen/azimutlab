@@ -64,9 +64,10 @@ dependencies {
 
     //moxy
     def moxyVersion = "2.1.1"
-    implementation "com.github.moxy-community:moxy:$moxyVersion"
-    annotationProcessor "com.github.moxy-community:moxy-compiler:$moxyVersion"
-    implementation "com.github.moxy-community:moxy-app-compat:$moxyVersion"
+    implementation 'com.github.moxy-community:moxy-androidx:2.0.2'
+    kapt "com.github.moxy-community:moxy-compiler:2.0.2"
+    annotationProcessor "com.github.moxy-community:moxy-compiler:2.0.2"
+    implementation 'com.github.moxy-community:moxy-material:2.0.2'
 
 
 
