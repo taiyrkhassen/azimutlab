@@ -1,44 +1,39 @@
 package com.example.azimutlab.mvp.repository
 
 import android.annotation.SuppressLint
-import android.content.Context
-import com.example.azimutlab.AzimutApp
+import android.content.SharedPreferences
 import com.example.azimutlab.Constants
-import com.example.azimutlab.PreferenceHelper
+import com.example.azimutlab.helpers.PreferenceHelper
 import com.example.azimutlab.api.ApiService
 import com.example.azimutlab.mvp.models.PostModel
 import io.reactivex.Observable
-import retrofit2.Response
-import javax.inject.Inject
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import javax.inject.Inject
 
-class MainRepository(context: Context, private var apiService: ApiService) {
+class MainRepository (private var apiService: ApiService) :
+    MainRepositoryInterface {
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
-    var mContext:Context = context
-
+    //back pressure strategy есть только на Flowable
     @SuppressLint("CheckResult")
-    fun getPosts(): Observable<List<PostModel>> {
+    override fun getPosts(): Observable<List<PostModel>> {
         val list: ArrayList<PostModel> = arrayListOf()
-        getPostsFromApi().doOnNext{
+        apiService.getPostsJson(1).subscribe({
             list.addAll(it)
-        }.doOnError{
-            list.addAll(getPostsFromCashe()!!)
-        }
+        }, {
+            list.addAll(getPostsFromCache()!!)
+        })
         return Observable.just(list)
     }
 
     //проверить при забирании на нулл
-    private fun getPostsFromCashe(): ArrayList<PostModel>? {
-        val appSharedPrefs = PreferenceHelper.defaultPrefs(mContext)
+    private fun getPostsFromCache(): ArrayList<PostModel>? {
+        val appSharedPrefs = sharedPreferences
         val gson = Gson()
         val json = appSharedPrefs.getString(Constants.LIST_POSTS_CASHE, "")
         val type = object : TypeToken<List<PostModel>>() {}.type
         return gson.fromJson(json, type) as ArrayList<PostModel>
     }
-
-    private fun getPostsFromApi(): Observable<List<PostModel>> {
-        return apiService.getPostsJson(1)
-    }
-
 }

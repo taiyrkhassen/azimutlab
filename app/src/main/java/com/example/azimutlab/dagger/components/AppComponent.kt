@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import com.example.azimutlab.dagger.modules.AppModule
 import com.example.azimutlab.dagger.modules.NetworkModule
 import com.example.azimutlab.dagger.modules.RepositoryModules
+import com.example.azimutlab.helpers.PreferenceHelper
+import com.example.azimutlab.mvp.repository.MainRepository
 import dagger.Component
 import retrofit2.Retrofit
 
@@ -13,5 +15,4 @@ interface AppComponent {
     fun getContext(): Context
     fun getRetrofit(): Retrofit
     fun getPrefs(): SharedPreferences
-
 }

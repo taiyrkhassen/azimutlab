@@ -12,7 +12,6 @@ open class BasePresenter<T: MvpView> : MvpPresenter<T>() {
 
     var disposables = CompositeDisposable()
 
-    private val apiService = AzimutApp.serviceComponent.getApiService()
 
     private val cx = AzimutApp.appComponent.getContext()
 

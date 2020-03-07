@@ -1,13 +1,6 @@
-package com.example.azimutlab
-
-import android.content.Context
+package com.example.azimutlab.helpers
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
-
-object PreferenceHelper {
-
-    fun defaultPrefs(context: Context): SharedPreferences
-            = PreferenceManager.getDefaultSharedPreferences(context)
+object PreferenceHelper{
 
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
         val editor = this.edit()

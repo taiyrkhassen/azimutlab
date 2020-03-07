@@ -4,16 +4,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.azimutlab.AzimutApp
+import com.example.azimutlab.Constants
 import com.example.azimutlab.R
 import com.example.azimutlab.adapters.DataListAdapter
+import com.example.azimutlab.dagger.components.DaggerAppComponent
+import com.example.azimutlab.dagger.components.DaggerServiceComponent
+import com.example.azimutlab.dagger.modules.AppModule
 import com.example.azimutlab.mvp.models.PostModel
 import com.example.azimutlab.mvp.presenters.MainPresenter
+import com.example.azimutlab.mvp.repository.MainRepository
 import com.example.azimutlab.mvp.view.interfaces.MainActivityView
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.presenter.InjectPresenter
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainActivityView {
+
     @InjectPresenter
     lateinit var presenter : MainPresenter
 
@@ -44,6 +52,7 @@ class MainActivity : BaseActivity(), MainActivityView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         launch.setOnClickListener {
             launch.visibility = View.GONE
             presenter.getPosts()

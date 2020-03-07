@@ -1,9 +1,10 @@
 package com.example.azimutlab.mvp.presenters
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.azimutlab.AzimutApp
 import com.example.azimutlab.Constants
-import com.example.azimutlab.PreferenceHelper
+import com.example.azimutlab.helpers.PreferenceHelper
 import com.example.azimutlab.dagger.components.DaggerServiceComponent
 import com.example.azimutlab.mvp.models.PostModel
 import com.example.azimutlab.mvp.repository.MainRepository
@@ -15,19 +16,18 @@ import javax.inject.Inject
 import com.google.gson.Gson
 
 @InjectViewState
-class MainPresenter @Inject constructor() : BasePresenter<MainActivityView>() {
+class MainPresenter @Inject constructor(var mainRepo: MainRepository) : BasePresenter<MainActivityView>() {
 
     init {
         DaggerServiceComponent.builder()
-            .appComponent(AzimutApp.getApplicationComponent())
+            .appComponent(AzimutApp.getApplicationComponent()) //our dependency in service component
             .build()
             .inject(this)
     }
-
+    // если вот срочно понадобится контекст то вытаскивать так?
+    //var context = AzimutApp.getApplicationComponent().getContext()
     @Inject
-    lateinit var mainRepo: MainRepository
-    @Inject
-    lateinit var mContext: Context
+    lateinit var mPrefs : SharedPreferences
 
     fun getPosts() {
 
@@ -37,23 +37,27 @@ class MainPresenter @Inject constructor() : BasePresenter<MainActivityView>() {
         }
 
         viewState.loadingData(true)
-
+        //добавление в кэш делать в фооновом потоке тоже
         disposables.add(
             mainRepo.getPosts()
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .doOnNext {
+                    addToCash(it)
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    viewState.loadingData(false)
                     viewState.successGetData(it)
-                    addToCash(it)
+                    viewState.loadingData(false)
                 }, {
+                    viewState.loadingData(false)
                     viewState.failedGetData(it.localizedMessage)
                 })
         )
     }
 
-    fun addToCash(list: List<PostModel>) {
-        val appSharedPrefs2 = PreferenceHelper.defaultPrefs(context = mContext)
+    private fun addToCash(list: List<PostModel>) {
+        val appSharedPrefs2 = mPrefs
         val prefsEditor = appSharedPrefs2.edit()
         val gson = Gson()
         val json = gson.toJson(list)
