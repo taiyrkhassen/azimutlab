@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.azimutlab.AzimutApp
 import com.example.azimutlab.Constants
+import com.example.azimutlab.custom_errors.NoInternetException
 import com.example.azimutlab.helpers.PreferenceHelper
 import com.example.azimutlab.dagger.components.DaggerServiceComponent
 import com.example.azimutlab.mvp.models.PostModel
@@ -16,7 +17,10 @@ import javax.inject.Inject
 import com.google.gson.Gson
 
 @InjectViewState
-class MainPresenter @Inject constructor(var mainRepo: MainRepository) : BasePresenter<MainActivityView>() {
+class MainPresenter : BasePresenter<MainActivityView>() {
+
+    @Inject
+    lateinit var mainRepo:MainRepository
 
     init {
         DaggerServiceComponent.builder()
@@ -30,12 +34,6 @@ class MainPresenter @Inject constructor(var mainRepo: MainRepository) : BasePres
     lateinit var mPrefs : SharedPreferences
 
     fun getPosts() {
-
-        if (!isConnectedToInternet()) {
-            viewState.noInternetConnection()
-            return
-        }
-
         viewState.loadingData(true)
         //добавление в кэш делать в фооновом потоке тоже
         disposables.add(
@@ -50,8 +48,12 @@ class MainPresenter @Inject constructor(var mainRepo: MainRepository) : BasePres
                     viewState.successGetData(it)
                     viewState.loadingData(false)
                 }, {
-                    viewState.loadingData(false)
-                    viewState.failedGetData(it.localizedMessage)
+                    try {
+                        viewState.loadingData(false)
+                        viewState.failedGetData(it.localizedMessage)
+                    } catch (ex:NoInternetException){
+                        viewState.noInternetConnection()
+                    }
                 })
         )
     }
@@ -66,6 +68,10 @@ class MainPresenter @Inject constructor(var mainRepo: MainRepository) : BasePres
         //add new data
         prefsEditor.putString(Constants.LIST_POSTS_CASHE, json)
         prefsEditor.commit()
+    }
+
+    fun dispose(){
+        disposables.dispose()
     }
 
 }

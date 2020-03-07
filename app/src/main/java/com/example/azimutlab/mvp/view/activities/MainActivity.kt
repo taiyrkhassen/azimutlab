@@ -59,6 +59,11 @@ class MainActivity : BaseActivity(), MainActivityView {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
+    }
+
     override fun onPause() {
         super.onPause()
         launch.visibility = View.VISIBLE

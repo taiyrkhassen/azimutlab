@@ -14,8 +14,8 @@ class RepositoryModules {
         return MainRepository(apiService)
     }
 
-    @Provides
-    fun providePresenter(mainRepository: MainRepository):MainPresenter{
-        return MainPresenter(mainRepository)
-    }
+//    @Provides
+//    fun providePresenter(mainRepository: MainRepository):MainPresenter{
+//        return MainPresenter(mainRepository)
+//    }
 }
