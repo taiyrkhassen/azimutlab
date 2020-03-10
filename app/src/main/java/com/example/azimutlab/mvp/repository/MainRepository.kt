@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.internal.operators.observable.ObservableElementAt
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.Android
 import javax.inject.Inject
@@ -34,25 +35,19 @@ class MainRepository(private var apiService: ApiService) :
     //back pressure strategy есть только на Flowable
     @SuppressLint("CheckResult")
     override fun getPosts(): Observable<List<PostModel>> {
-        val list: ArrayList<PostModel> = arrayListOf()
-        apiService.getPostsJson(1)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                list.addAll(it)
-            }, {
-                list.addAll(getPostsFromCache() ?: ArrayList())
-            })
-        d("check_list", list.size.toString())
-        return Observable.just(list)
+       return apiService.getPostsJson(1)
+            .flatMap {
+                if (it.isEmpty()) return@flatMap Observable.just(getPostsFromCache())
+                else Observable.just(it)
+            }
     }
 
     //проверить при забирании на нулл
-    private fun getPostsFromCache(): ArrayList<PostModel>? {
+    private fun getPostsFromCache(): List<PostModel>? {
         val appSharedPrefs = sharedPreferences
         val gson = Gson()
         val json = appSharedPrefs.getString(Constants.LIST_POSTS_CASHE, "")
         val type = object : TypeToken<List<PostModel>>() {}.type
-        return gson.fromJson(json, type) as ArrayList<PostModel>?
+        return gson.fromJson(json, type)
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.azimutlab.AzimutApp
 import com.example.azimutlab.Constants
+import com.example.azimutlab.api.ApiService
 import com.example.azimutlab.custom_errors.NoInternetException
 import com.example.azimutlab.helpers.PreferenceHelper
 import com.example.azimutlab.dagger.components.DaggerServiceComponent
@@ -21,7 +22,7 @@ import com.google.gson.Gson
 class MainPresenter : BasePresenter<MainActivityView>() {
 
     @Inject
-    lateinit var mainRepo:MainRepository
+    lateinit var mainRepo: MainRepository
 
     //https://jsonplaceholder.typicode.com/posts/1
 
@@ -31,10 +32,12 @@ class MainPresenter : BasePresenter<MainActivityView>() {
             .build()
             .inject(this)
     }
+
     // если вот срочно понадобится контекст то вытаскивать так?
     //var context = AzimutApp.getApplicationComponent().getContext()
     @Inject
-    lateinit var mPrefs : SharedPreferences
+    lateinit var mPrefs: SharedPreferences
+
 
     fun getPosts() {
         viewState.loadingData(true)
@@ -42,7 +45,6 @@ class MainPresenter : BasePresenter<MainActivityView>() {
         disposables.add(
             mainRepo.getPosts()
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation())
                 .doOnNext {
                     addToCash(it)
                 }
@@ -51,11 +53,11 @@ class MainPresenter : BasePresenter<MainActivityView>() {
                     viewState.successGetData(it)
                     viewState.loadingData(false)
                 }, {
-                    try {
+                    if (it is NoInternetException) {
+                        viewState.noInternetConnection()
+                    } else {
                         viewState.loadingData(false)
                         viewState.failedGetData(it.localizedMessage)
-                    } catch (ex:NoInternetException){
-                        viewState.noInternetConnection()
                     }
                 })
         )
@@ -73,7 +75,7 @@ class MainPresenter : BasePresenter<MainActivityView>() {
         prefsEditor.commit()
     }
 
-    fun dispose(){
+    fun dispose() {
         disposables.dispose()
     }
 
