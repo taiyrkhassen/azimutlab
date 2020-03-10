@@ -33,21 +33,12 @@ class MainPresenter : BasePresenter<MainActivityView>() {
             .inject(this)
     }
 
-    // если вот срочно понадобится контекст то вытаскивать так?
-    //var context = AzimutApp.getApplicationComponent().getContext()
-    @Inject
-    lateinit var mPrefs: SharedPreferences
-
-
     fun getPosts() {
         viewState.loadingData(true)
         //добавление в кэш делать в фооновом потоке тоже
         disposables.add(
             mainRepo.getPosts()
                 .subscribeOn(Schedulers.io())
-                .doOnNext {
-                    addToCash(it)
-                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.successGetData(it)
@@ -61,18 +52,6 @@ class MainPresenter : BasePresenter<MainActivityView>() {
                     }
                 })
         )
-    }
-
-    private fun addToCash(list: List<PostModel>) {
-        val appSharedPrefs2 = mPrefs
-        val prefsEditor = appSharedPrefs2.edit()
-        val gson = Gson()
-        val json = gson.toJson(list)
-        //remove old data
-        prefsEditor.remove(Constants.LIST_POSTS_CASHE).apply()
-        //add new data
-        prefsEditor.putString(Constants.LIST_POSTS_CASHE, json)
-        prefsEditor.commit()
     }
 
     fun dispose() {

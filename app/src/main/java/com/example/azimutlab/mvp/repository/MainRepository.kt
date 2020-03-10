@@ -37,8 +37,13 @@ class MainRepository(private var apiService: ApiService) :
     override fun getPosts(): Observable<List<PostModel>> {
        return apiService.getPostsJson(1)
             .flatMap {
-                if (it.isEmpty()) return@flatMap Observable.just(getPostsFromCache())
-                else Observable.just(it)
+                if (it.isEmpty()) {
+                    return@flatMap Observable.just(getPostsFromCache())
+                }
+                else {
+                    addToCash(it)
+                    Observable.just(it)
+                }
             }
     }
 
@@ -49,5 +54,18 @@ class MainRepository(private var apiService: ApiService) :
         val json = appSharedPrefs.getString(Constants.LIST_POSTS_CASHE, "")
         val type = object : TypeToken<List<PostModel>>() {}.type
         return gson.fromJson(json, type)
+    }
+
+    //добавление в кэш в другом потоке в репозитории
+    private fun addToCash(list: List<PostModel>) {
+        val appSharedPrefs2 = sharedPreferences
+        val prefsEditor = appSharedPrefs2.edit()
+        val gson = Gson()
+        val json = gson.toJson(list)
+        //remove old data
+        prefsEditor.remove(Constants.LIST_POSTS_CASHE).apply()
+        //add new data
+        prefsEditor.putString(Constants.LIST_POSTS_CASHE, json)
+        prefsEditor.commit()
     }
 }
