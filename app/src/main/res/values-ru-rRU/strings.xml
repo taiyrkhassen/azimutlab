@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">azimutlab</string>
+    <string name="no_network_available">Нет интернета, пожалуйста проверьте соеденение с интернетом.</string>
+    <string name="check_connected_wifi">Нет интернета, пожалуйста проверьте соеденение с интернетом.</string>
+    <string name="no_internet_toast">Нет интернета!</string>
+</resources>

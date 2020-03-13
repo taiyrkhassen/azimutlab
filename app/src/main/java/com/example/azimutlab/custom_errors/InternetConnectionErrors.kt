@@ -1,15 +1,19 @@
 package com.example.azimutlab.custom_errors
 
+import com.example.azimutlab.AzimutApp
+import com.example.azimutlab.R
 import java.io.IOException
 
 class NoConnectivityException : IOException() {
+    val context = AzimutApp.getApplicationComponent().getContext()
     override val message: String
         get() =
-            "No network available, please check your WiFi or Data connection"
+            context.getString(R.string.no_network_available)
 }
 
 class NoInternetException() : IOException() {
+    val context = AzimutApp.getApplicationComponent().getContext()
     override val message: String
         get() =
-            "No internet available, please check your connected WIFi or Data"
+            context.getString(R.string.check_connected_wifi)
 }

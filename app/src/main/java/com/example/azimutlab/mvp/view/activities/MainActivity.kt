@@ -59,7 +59,7 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override fun noInternetConnection() {
-        toast("No internet!!")
+        toast(getString(R.string.no_internet_toast))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

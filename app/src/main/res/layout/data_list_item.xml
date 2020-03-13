@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/post_id"
-        android:textColor=""
+        android:textColor="#000000"
         android:textSize="14sp"
         android:text="2145"/>
 
