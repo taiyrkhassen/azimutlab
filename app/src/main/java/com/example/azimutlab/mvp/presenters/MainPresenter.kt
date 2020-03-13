@@ -15,14 +15,7 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(private var mainRepo: MainRepositoryImpl) :
     BasePresenter<MainActivityView>() {
 
-    //https://jsonplaceholder.typicode.com/posts/1
-
-//    init {
-//        DaggerServiceComponent.builder()
-//            .appComponent(AzimutApp.getApplicationComponent()) //our dependency in service component
-//            .build()
-//            .inject(this)
-//    }
+    //https://jsonplaceholder.typicode.com/posts/
 
     fun getPosts() {
         viewState.loadingData(true)
