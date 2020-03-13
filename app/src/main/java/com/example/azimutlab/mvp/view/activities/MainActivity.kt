@@ -44,7 +44,6 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override fun successGetData(list: List<PostModel>) {
-        toast("Урааа!")
         list_data.show()
         list_data.layoutManager = LinearLayoutManager(this)
         adapter.addDataList(list as ArrayList<PostModel>)
@@ -69,10 +68,6 @@ class MainActivity : BaseActivity(), MainActivityView {
         launch.setOnClickListener {
             launch.hide()
             presenter.getPosts()
-//            list_data.show()
-//            list_data.layoutManager = LinearLayoutManager(this)
-//            adapter.addDataList(testData())
-//            list_data.adapter = adapter
         }
     }
 
@@ -87,16 +82,5 @@ class MainActivity : BaseActivity(), MainActivityView {
         list_data.hide()
         progress_bar.hide()
     }
-
-    private fun testData(): ArrayList<PostModel> {
-        return arrayListOf(
-            PostModel(12, 2352, "Taiyr", "afjasjdfnsljnfssd"),
-            PostModel(13, 1323, "Taiyr", "afjasjdfnsljnfssd"),
-            PostModel(14, 2342, "Taiyr", "afjasjdfnsljnfssd"),
-            PostModel(16, 8478, "Taiyr", "afjasjdfnsljnfssd")
-        )
-    }
-
-
 
 }
