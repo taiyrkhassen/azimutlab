@@ -11,9 +11,10 @@ import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
 
-class NoInternetConnectInterceptor(var context: Context) : Interceptor {
+class NoInternetConnectInterceptor(private val context: Context) :
+    Interceptor {
 
-    fun isConnectedToInternet(): Boolean {
+    private fun isConnectedToInternet() : Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -25,13 +26,12 @@ class NoInternetConnectInterceptor(var context: Context) : Interceptor {
     }
 
     //stackOverFlow code to check available internet
-    private fun isInternetAvailable(): Boolean {
+    private fun isInternetAvailable() : Boolean {
         return try {
             val timeoutMs = 1500
             val sock = Socket()
-            val sockaddr = InetSocketAddress("8.8.8.8", 53)
-
-            sock.connect(sockaddr, timeoutMs)
+            val sockAdr = InetSocketAddress("8.8.8.8", 53)
+            sock.connect(sockAdr, timeoutMs)
             sock.close()
             true
         } catch (e: IOException) {
@@ -39,7 +39,7 @@ class NoInternetConnectInterceptor(var context: Context) : Interceptor {
         }
     }
 
-    override fun intercept(chain: Interceptor.Chain): Response {
+    override fun intercept(chain: Interceptor.Chain) : Response {
         return if (!isConnectedToInternet()) {
             throw NoConnectivityException()
         } else if (!isInternetAvailable()) {
@@ -48,6 +48,7 @@ class NoInternetConnectInterceptor(var context: Context) : Interceptor {
             chain.proceed(chain.request())
         }
     }
+
 }
 
 

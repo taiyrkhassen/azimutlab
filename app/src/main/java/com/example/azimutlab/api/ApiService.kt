@@ -11,5 +11,5 @@ interface ApiService{
     @GET("/posts/{post_id}/")
     fun getPostsJson(
         @Path("post_id") post_id: Int
-    ):Observable<List<PostModel>>
+    ):Observable<Response<List<PostModel>>>
 }

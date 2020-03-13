@@ -1,6 +1,5 @@
 package com.example.azimutlab.mvp.models
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class PostModel(

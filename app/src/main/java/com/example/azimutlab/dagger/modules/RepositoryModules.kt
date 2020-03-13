@@ -1,17 +1,15 @@
 package com.example.azimutlab.dagger.modules
 
-import android.content.Context
 import com.example.azimutlab.api.ApiService
-import com.example.azimutlab.mvp.presenters.MainPresenter
-import com.example.azimutlab.mvp.repository.MainRepository
+import com.example.azimutlab.mvp.repository.MainRepositoryImpl
 import dagger.Module
 import dagger.Provides
 
 @Module
 class RepositoryModules {
     @Provides
-    fun provideMainRepository(apiService: ApiService) : MainRepository{
-        return MainRepository(apiService)
+    fun provideMainRepository(apiService: ApiService) : MainRepositoryImpl{
+        return MainRepositoryImpl(apiService)
     }
 
 //    @Provides

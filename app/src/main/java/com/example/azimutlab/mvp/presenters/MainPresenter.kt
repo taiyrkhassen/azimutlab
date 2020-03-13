@@ -1,28 +1,20 @@
 package com.example.azimutlab.mvp.presenters
 
-import android.content.Context
-import android.content.SharedPreferences
 import com.example.azimutlab.AzimutApp
-import com.example.azimutlab.Constants
-import com.example.azimutlab.api.ApiService
 import com.example.azimutlab.custom_errors.NoInternetException
-import com.example.azimutlab.helpers.PreferenceHelper
 import com.example.azimutlab.dagger.components.DaggerServiceComponent
-import com.example.azimutlab.helpers.NoInternetConnectInterceptor
-import com.example.azimutlab.mvp.models.PostModel
-import com.example.azimutlab.mvp.repository.MainRepository
+import com.example.azimutlab.mvp.repository.MainRepositoryImpl
 import com.example.azimutlab.mvp.view.interfaces.MainActivityView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import moxy.InjectViewState
 import javax.inject.Inject
-import com.google.gson.Gson
 
 @InjectViewState
 class MainPresenter : BasePresenter<MainActivityView>() {
 
     @Inject
-    lateinit var mainRepo: MainRepository
+    lateinit var mainRepo: MainRepositoryImpl
 
     //https://jsonplaceholder.typicode.com/posts/1
 
@@ -35,7 +27,6 @@ class MainPresenter : BasePresenter<MainActivityView>() {
 
     fun getPosts() {
         viewState.loadingData(true)
-        //добавление в кэш делать в фооновом потоке тоже
         disposables.add(
             mainRepo.getPosts()
                 .subscribeOn(Schedulers.io())
