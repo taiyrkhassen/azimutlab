@@ -10,45 +10,36 @@ import com.example.azimutlab.mvp.models.PostModel
 import io.reactivex.Observable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Single
 import javax.inject.Inject
 
-class MainRepositoryImpl(private var apiService: ApiService) :
+//shared pref through constructor injetction
+class MainRepositoryImpl(private val apiService: ApiService, private val sharedPreferences: SharedPreferences) :
     MainRepository {
 
-    init {
-        DaggerServiceComponent.builder()
-            .appComponent(AzimutApp.appComponent)
-            .build()
-            .inject(this)
-    }
-
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
 
     @SuppressLint("CheckResult")
-    override fun getPosts(): Observable<List<PostModel>> {
+    override fun getPosts(): Single<List<PostModel>> {
        return apiService.getPostsJson(1)
             .flatMap {
                 if (it.isSuccessful) {
                     addToCash(it.body()?: emptyList())
-                    Observable.just(it.body()?: emptyList())
+                    Single.just(it.body()?: emptyList())
                 } else {
-                    Observable.just(getPostsFromCache())
+                    Single.just(getPostsFromCache())
                 }
             }
     }
 
     private fun getPostsFromCache(): List<PostModel>? {
-        val appSharedPrefs = sharedPreferences
         val gson = Gson()
-        val json = appSharedPrefs.getString(Constants.LIST_POSTS_CACHE, "")
+        val json = sharedPreferences.getString(Constants.LIST_POSTS_CACHE, "")
         val type = object : TypeToken<List<PostModel>>() {}.type
         return gson.fromJson(json, type)
     }
 
     private fun addToCash(list: List<PostModel>) {
-        val appSharedPrefs2 = sharedPreferences
-        val prefsEditor = appSharedPrefs2.edit()
+        val prefsEditor = sharedPreferences.edit()
         val gson = Gson()
         val json = gson.toJson(list)
         //remove old data

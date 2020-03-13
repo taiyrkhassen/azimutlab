@@ -8,7 +8,8 @@ import com.example.azimutlab.R
 import com.example.azimutlab.mvp.models.PostModel
 import kotlinx.android.synthetic.main.data_list_item.view.*
 
-class DataListAdapter : RecyclerView.Adapter<DataListAdapter.ViewHolder>() {
+class DataListAdapter :
+    RecyclerView.Adapter<DataListAdapter.ViewHolder>() {
 
     private var dataList = ArrayList<PostModel>()
 

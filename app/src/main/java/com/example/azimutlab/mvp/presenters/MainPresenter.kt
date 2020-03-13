@@ -10,20 +10,19 @@ import io.reactivex.schedulers.Schedulers
 import moxy.InjectViewState
 import javax.inject.Inject
 
+//inject through constructor
 @InjectViewState
-class MainPresenter : BasePresenter<MainActivityView>() {
-
-    @Inject
-    lateinit var mainRepo: MainRepositoryImpl
+class MainPresenter @Inject constructor(private var mainRepo: MainRepositoryImpl) :
+    BasePresenter<MainActivityView>() {
 
     //https://jsonplaceholder.typicode.com/posts/1
 
-    init {
-        DaggerServiceComponent.builder()
-            .appComponent(AzimutApp.getApplicationComponent()) //our dependency in service component
-            .build()
-            .inject(this)
-    }
+//    init {
+//        DaggerServiceComponent.builder()
+//            .appComponent(AzimutApp.getApplicationComponent()) //our dependency in service component
+//            .build()
+//            .inject(this)
+//    }
 
     fun getPosts() {
         viewState.loadingData(true)
