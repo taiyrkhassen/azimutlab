@@ -19,7 +19,8 @@ class NetworkModule {
 
     //check internet here
     @Provides
-    fun interceptor(sharedPreferences: SharedPreferences, context:Context): Interceptor {
+    fun interceptor(sharedPreferences: SharedPreferences, context:Context) :
+            Interceptor {
         return Interceptor { chain ->
             val request = chain.request().newBuilder()
             val userToken = sharedPreferences.getString(Constants.TOKEN, "")
@@ -71,7 +72,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun internetConnectionInterceptor(context: Context):NoInternetConnectInterceptor{
+    fun internetConnectionInterceptor(context: Context): NoInternetConnectInterceptor {
         return NoInternetConnectInterceptor(context)
     }
 }

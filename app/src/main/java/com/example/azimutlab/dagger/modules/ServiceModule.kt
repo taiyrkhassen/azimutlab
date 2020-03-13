@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 class ServiceModule {
 
     @Provides
-    fun getApiService(retrofit: Retrofit): ApiService{
+    fun getApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 

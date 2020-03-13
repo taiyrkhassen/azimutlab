@@ -22,7 +22,8 @@ class AppModule(var context: Context, var baseUrl: String) {
 
     // here create retrofit
     @Provides
-    fun retrofitBuild(okHttpClient: OkHttpClient, provideRxAdapter: RxJava2CallAdapterFactory): Retrofit{
+    fun retrofitBuild(okHttpClient: OkHttpClient, provideRxAdapter: RxJava2CallAdapterFactory):
+            Retrofit {
         return Retrofit.Builder()
             .addCallAdapterFactory(provideRxAdapter)
             .addConverterFactory(GsonConverterFactory.create())
@@ -38,10 +39,9 @@ class AppModule(var context: Context, var baseUrl: String) {
     }
 
     @Provides
-    fun provideSharedPref(context: Context): SharedPreferences{
+    fun provideSharedPref(context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
-
 
 
 }

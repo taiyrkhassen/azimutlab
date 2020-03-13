@@ -8,7 +8,7 @@ import dagger.Provides
 @Module
 class RepositoryModules {
     @Provides
-    fun provideMainRepository(apiService: ApiService) : MainRepositoryImpl{
+    fun provideMainRepository(apiService: ApiService): MainRepositoryImpl {
         return MainRepositoryImpl(apiService)
     }
 

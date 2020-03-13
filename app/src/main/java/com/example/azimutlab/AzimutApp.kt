@@ -32,14 +32,14 @@ class AzimutApp : Application() {
         createServiceComponent()
     }
 
-    private fun createAppComponent(){
+    private fun createAppComponent() {
         appComponent = DaggerAppComponent
             .builder()
             .appModule(AppModule(this, BASE_URL))
             .build()
     }
 
-    private fun createServiceComponent(){
+    private fun createServiceComponent() {
         serviceComponent = DaggerServiceComponent
             .builder()
             .appComponent(appComponent)

@@ -41,7 +41,7 @@ class MainRepositoryImpl(private var apiService: ApiService) :
     private fun getPostsFromCache(): List<PostModel>? {
         val appSharedPrefs = sharedPreferences
         val gson = Gson()
-        val json = appSharedPrefs.getString(Constants.LIST_POSTS_CASHE, "")
+        val json = appSharedPrefs.getString(Constants.LIST_POSTS_CACHE, "")
         val type = object : TypeToken<List<PostModel>>() {}.type
         return gson.fromJson(json, type)
     }
@@ -52,9 +52,9 @@ class MainRepositoryImpl(private var apiService: ApiService) :
         val gson = Gson()
         val json = gson.toJson(list)
         //remove old data
-        prefsEditor.remove(Constants.LIST_POSTS_CASHE).apply()
+        prefsEditor.remove(Constants.LIST_POSTS_CACHE).apply()
         //add new data
-        prefsEditor.putString(Constants.LIST_POSTS_CASHE, json)
+        prefsEditor.putString(Constants.LIST_POSTS_CACHE, json)
         prefsEditor.commit()
     }
 }

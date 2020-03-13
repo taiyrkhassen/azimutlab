@@ -13,7 +13,7 @@ class DataListAdapter : RecyclerView.Adapter<DataListAdapter.ViewHolder>() {
     private var dataList = ArrayList<PostModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView =LayoutInflater.from(parent.context)
+        val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.data_list_item, parent, false)
         return ViewHolder(itemView)
     }
@@ -32,8 +32,9 @@ class DataListAdapter : RecyclerView.Adapter<DataListAdapter.ViewHolder>() {
     }
 
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: PostModel){
+    inner class ViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+        fun bind(item: PostModel) {
             itemView.apply {
                 user_id.text = item.userId.toString()
                 title.text = item.title
