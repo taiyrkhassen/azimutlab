@@ -14,34 +14,36 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 //shared pref through constructor injetction
-class MainRepositoryImpl(private val apiService: ApiService, private val sharedPreferences: SharedPreferences) :
+class MainRepositoryImpl(
+    private val apiService: ApiService,
+    private val sharedPreferences: SharedPreferences
+) :
     MainRepository {
 
 
     @SuppressLint("CheckResult")
     override fun getPosts(): Observable<List<PostModel>> {
-       return apiService.getPostsJson()
+        return apiService.getPostsJson()
             .flatMap {
                 if (it.isSuccessful) {
-                    addToCash(it.body()?: emptyList())
+                    addToCash(it.body() ?: emptyList())
                     Observable.just(it.body())
                 } else {
-                    Observable.just(getPostsFromCache())
+                    Observable.just(testData())
                 }
             }
     }
 
+
     private fun getPostsFromCache(): List<PostModel>? {
-        val gson = Gson()
         val json = sharedPreferences.getString(Constants.LIST_POSTS_CACHE, "")
         val type = object : TypeToken<List<PostModel>>() {}.type
-        return gson.fromJson(json, type)
+        return Gson().fromJson(json, type)
     }
 
     private fun addToCash(list: List<PostModel>) {
         val prefsEditor = sharedPreferences.edit()
-        val gson = Gson()
-        val json = gson.toJson(list)
+        val json = Gson().toJson(list)
         //remove old data
         prefsEditor.remove(Constants.LIST_POSTS_CACHE).apply()
         //add new data

@@ -35,6 +35,7 @@ class MainPresenter @Inject constructor(private var mainRepo: MainRepositoryImpl
                     viewState.loadingData(false)
                 }, {
                     if (it is NoInternetException) {
+                        //how to get cash data?
                         viewState.noInternetConnection()
                     } else {
                         viewState.loadingData(false)
