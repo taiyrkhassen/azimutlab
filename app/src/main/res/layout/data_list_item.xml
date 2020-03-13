@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/black"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:id="@+id/user_id"
             app:layout_constraintTop_toBottomOf="@+id/user_id_text"
             app:layout_constraintStart_toStartOf="@+id/user_id_text"
@@ -39,17 +39,17 @@
             android:id="@+id/title"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:id="@+id/content"
             app:layout_constraintTop_toBottomOf="@+id/title"
             app:layout_constraintStart_toEndOf="@+id/user_id"
+            app:layout_constraintEnd_toEndOf="parent"
             android:textSize="12sp"
             android:textColor="@color/black"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:text="sadasdasdasdasdasdasdasdasdasdadasdasdaasdasdasdadadsaaasdaddasdasdas"
-            android:layout_marginLeft="15dp" />
+             />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,8 +57,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/post_id"
-        android:textColor="#A4AFD3"
+        android:textColor=""
         android:textSize="14sp"
         android:text="2145"/>
+
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#8fc533 "
+        app:layout_constraintTop_toBottomOf="@+id/content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

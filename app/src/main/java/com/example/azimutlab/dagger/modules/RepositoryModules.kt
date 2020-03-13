@@ -15,4 +15,9 @@ class RepositoryModules {
         return MainRepositoryImpl(apiService, sharedPreferences)
     }
 
+    @Provides
+    fun providePresenter(mainRepositoryImpl: MainRepositoryImpl): MainPresenter {
+        return MainPresenter(mainRepositoryImpl)
+    }
+
 }

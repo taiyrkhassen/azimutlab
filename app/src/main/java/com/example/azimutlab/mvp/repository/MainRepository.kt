@@ -5,5 +5,5 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface MainRepository {
-    fun getPosts(): Single<List<PostModel>>
+    fun getPosts(): Observable<List<PostModel>>
 }
