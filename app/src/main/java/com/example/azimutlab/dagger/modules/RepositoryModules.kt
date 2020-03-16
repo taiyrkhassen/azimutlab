@@ -2,7 +2,6 @@ package com.example.azimutlab.dagger.modules
 
 import android.content.SharedPreferences
 import com.example.azimutlab.api.ApiService
-import com.example.azimutlab.mvp.presenters.MainPresenter
 import com.example.azimutlab.mvvm.repository.MainRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -14,9 +13,6 @@ class RepositoryModules {
         return MainRepositoryImpl(apiService, sharedPreferences)
     }
 
-    @Provides
-    fun providePresenter(mainRepositoryImpl: MainRepositoryImpl): MainPresenter {
-        return MainPresenter(mainRepositoryImpl)
-    }
+
 
 }
