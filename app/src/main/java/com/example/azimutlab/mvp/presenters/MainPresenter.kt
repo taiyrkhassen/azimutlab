@@ -2,10 +2,8 @@ package com.example.azimutlab.mvp.presenters
 
 import com.example.azimutlab.custom_errors.NoInternetException
 import com.example.azimutlab.mvvm.repository.MainRepositoryImpl
-import com.example.azimutlab.mvvm.view.interfaces.MainActivityView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import moxy.InjectViewState
 import javax.inject.Inject
 
 //inject through constructor
