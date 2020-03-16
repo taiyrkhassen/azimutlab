@@ -1,4 +1,4 @@
-package com.example.azimutlab.mvp.view.interfaces
+package com.example.azimutlab.mvvm.view.interfaces
 
 import moxy.MvpView
 

@@ -1,6 +1,6 @@
 package com.example.azimutlab
 
-import com.example.azimutlab.mvp.repository.MainRepositoryImpl
+import com.example.azimutlab.mvvm.repository.MainRepositoryImpl
 import javax.inject.Inject
 
 

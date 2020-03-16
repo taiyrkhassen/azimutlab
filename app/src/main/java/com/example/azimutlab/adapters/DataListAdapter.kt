@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.azimutlab.R
-import com.example.azimutlab.mvp.models.PostModel
+import com.example.azimutlab.mvvm.models.PostModel
 import kotlinx.android.synthetic.main.data_list_item.view.*
 
 class DataListAdapter :

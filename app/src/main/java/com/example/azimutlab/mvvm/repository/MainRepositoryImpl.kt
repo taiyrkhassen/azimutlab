@@ -1,24 +1,19 @@
-package com.example.azimutlab.mvp.repository
+package com.example.azimutlab.mvvm.repository
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import com.example.azimutlab.AzimutApp
 import com.example.azimutlab.Constants
 import com.example.azimutlab.api.ApiService
-import com.example.azimutlab.dagger.components.DaggerServiceComponent
-import com.example.azimutlab.mvp.models.PostModel
+import com.example.azimutlab.mvvm.models.PostModel
 import io.reactivex.Observable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.reactivex.Single
-import javax.inject.Inject
 
 //shared pref through constructor injetction
 class MainRepositoryImpl(
     private val apiService: ApiService,
     private val sharedPreferences: SharedPreferences
-) :
-    MainRepository {
+) : MainRepository {
 
 
     @SuppressLint("CheckResult")

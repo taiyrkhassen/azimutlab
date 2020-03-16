@@ -1,4 +1,4 @@
-package com.example.azimutlab.mvp.view.activities
+package com.example.azimutlab.mvvm.view.activities
 
 import moxy.MvpAppCompatActivity
 

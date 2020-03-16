@@ -1,4 +1,4 @@
-package com.example.azimutlab.mvp.view.activities
+package com.example.azimutlab.mvvm.view.activities
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,10 +7,10 @@ import com.example.azimutlab.R
 import com.example.azimutlab.adapters.DataListAdapter
 import com.example.azimutlab.dagger.components.DaggerServiceComponent
 import com.example.azimutlab.hide
-import com.example.azimutlab.mvp.models.PostModel
+import com.example.azimutlab.mvvm.models.PostModel
 import com.example.azimutlab.mvp.presenters.MainPresenter
-import com.example.azimutlab.mvp.repository.MainRepositoryImpl
-import com.example.azimutlab.mvp.view.interfaces.MainActivityView
+import com.example.azimutlab.mvvm.repository.MainRepositoryImpl
+import com.example.azimutlab.mvvm.view.interfaces.MainActivityView
 import com.example.azimutlab.show
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.presenter.InjectPresenter

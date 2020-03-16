@@ -1,6 +1,6 @@
-package com.example.azimutlab.mvp.view.interfaces
+package com.example.azimutlab.mvvm.view.interfaces
 
-import com.example.azimutlab.mvp.models.PostModel
+import com.example.azimutlab.mvvm.models.PostModel
 
 interface MainActivityView: BaseView {
     fun failedGetData(msg:String)

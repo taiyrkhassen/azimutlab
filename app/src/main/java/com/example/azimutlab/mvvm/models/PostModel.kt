@@ -1,4 +1,4 @@
-package com.example.azimutlab.mvp.models
+package com.example.azimutlab.mvvm.models
 
 import com.google.gson.annotations.SerializedName
 
