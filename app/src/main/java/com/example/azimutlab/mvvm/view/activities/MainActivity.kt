@@ -30,7 +30,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private var adapter = DataListAdapter()
     lateinit var recyclerView:RecyclerView
-
+    init {
+        DaggerServiceComponent.builder()
+            .appComponent(AzimutApp.appComponent)
+            .build()
+            .inject(this)
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -43,7 +48,18 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bindViews()
-        getList()
+
+        launch.setOnClickListener {
+            launch.hide()
+            getList()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        launch.show()
+        list_data.hide()
+        progress_bar.hide()
     }
 
     private fun bindViews(){
@@ -52,7 +68,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
         viewModel.listPostLiveData.observe(this, Observer {
             adapter.addDataList(it as ArrayList<PostModel>)
+            recyclerView.adapter = adapter
+            recyclerView.show()
         })
+
         viewModel.error.observe(this, Observer {
             this.toast(it)
         })

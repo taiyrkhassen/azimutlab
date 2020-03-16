@@ -21,19 +21,22 @@ class MainViewModel @Inject constructor(
 
     val listPostLiveData by lazy { MutableLiveData<List<PostModel>>() }
     val isLoading by lazy { MutableLiveData<Boolean>() }
-    val error by lazy{ MutableLiveData<Exception>() }
+    val error by lazy { MutableLiveData<Exception>() }
 
-    fun getData() = addDisposable(
-        mainRepos.getPosts()
-            .subscribeOn(Schedulers.io())
-            .doOnSubscribe{isLoading.value = true}
-            .doFinally{isLoading.value = false}
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                listPostLiveData.value = it
-            }, {
-                error.value = it as Exception?
-            })
-    )
+    fun getData() {
+        isLoading.value = true
+        addDisposable(
+            mainRepos.getPosts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    isLoading.value = false
+                    listPostLiveData.value = it
+                }, {
+                    isLoading.value = false
+                    error.value = it as Exception?
+                })
+        )
+    }
 
 }
