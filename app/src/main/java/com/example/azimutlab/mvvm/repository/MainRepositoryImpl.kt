@@ -3,6 +3,7 @@ package com.example.azimutlab.mvvm.repository
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import com.example.azimutlab.Constants
+import com.example.azimutlab.api.ApiHelper
 import com.example.azimutlab.api.ApiService
 import com.example.azimutlab.mvvm.models.PostModel
 import io.reactivex.Observable
@@ -10,15 +11,19 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 //shared pref through constructor injetction
+interface MainRepository {
+    fun getPosts(): Observable<List<PostModel>>
+}
+
 class MainRepositoryImpl(
-    private val apiService: ApiService,
+    private val apiHelper: ApiHelper,
     private val sharedPreferences: SharedPreferences
 ) : MainRepository {
 
 
     @SuppressLint("CheckResult")
     override fun getPosts(): Observable<List<PostModel>> {
-        return apiService.getPostsJson()
+        return apiHelper.getPostJson()
             .flatMap {
                 if (it.isSuccessful) {
                     addToCash(it.body() ?: emptyList())

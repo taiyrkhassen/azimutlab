@@ -8,10 +8,11 @@ import dagger.Provides
 
 @Module
 class RepositoryModules {
-    @Provides
-    fun provideMainRepository(apiService: ApiService, sharedPreferences: SharedPreferences): MainRepositoryImpl {
-        return MainRepositoryImpl(apiService, sharedPreferences)
-    }
+
+//    @Provides
+//    fun provideMainRepository(apiService: ApiService, sharedPreferences: SharedPreferences): MainRepositoryImpl {
+//        return MainRepositoryImpl(apiService, sharedPreferences)
+//    }
 
 
 

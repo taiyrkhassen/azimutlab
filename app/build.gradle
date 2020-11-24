@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'koin'
+
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.0"
@@ -20,7 +22,7 @@ android {
         applicationId "com.example.azimutlab"
         minSdkVersion 15
         targetSdkVersion 28
-
+        multiDexEnabled = true
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath true
@@ -36,8 +38,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
         }
     }
 }
@@ -93,4 +96,11 @@ dependencies {
 
     //stetho
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
+    //koin
+    implementation "org.koin:koin-android-viewmodel:2.2.1"
+    implementation "org.koin:koin-android:2.2.1"
+    implementation "org.koin:koin-core:2.2.1"
+
+    implementation 'com.android.support:multidex:1.0.3'
 }
