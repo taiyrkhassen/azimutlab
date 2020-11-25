@@ -14,9 +14,14 @@ import com.example.azimutlab.koin.appModule
 import com.example.azimutlab.koin.repoModule
 import com.example.azimutlab.koin.viewModelModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.Koin
+import org.koin.core.KoinApplication
+import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
 
 class AzimutApp : MultiDexApplication() {
+
+
     companion object {
         fun get(activity: Activity): AzimutApp {
             return activity.application as AzimutApp
@@ -24,6 +29,9 @@ class AzimutApp : MultiDexApplication() {
 
         lateinit var appComponent: AppComponent
         lateinit var serviceComponent: ServiceComponent
+
+        //koin for inject
+        lateinit var koinTest: Koin
 
         fun getApplicationComponent(): AppComponent {
             return appComponent
@@ -35,10 +43,11 @@ class AzimutApp : MultiDexApplication() {
         super.onCreate()
         createAppComponent()
         createServiceComponent()
-        startKoin {
+        //create koin for injection
+        koinTest = startKoin {
             androidContext(this@AzimutApp)
             modules(listOf(appModule, repoModule, viewModelModule))
-        }
+        }.koin
     }
 
     private fun createAppComponent() {

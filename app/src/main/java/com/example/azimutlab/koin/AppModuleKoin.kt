@@ -10,6 +10,8 @@ import com.example.azimutlab.Constants.BASE_URL
 import com.example.azimutlab.api.ApiHelper
 import com.example.azimutlab.api.ApiHelperImpl
 import com.example.azimutlab.api.ApiService
+import com.example.azimutlab.api_koin.AccountFeatureHolderTest
+import com.example.azimutlab.api_koin.BaseFeatureHolder
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -26,24 +28,32 @@ import java.util.concurrent.TimeUnit
 
 val appModule = module {
     //делаем акаунт фючер модуль
-    single { provideOkHttpClient(interceptor = get(), httpLoggingInterceptor = get()) }
+    single{ provideOkHttpClient(interceptor = get(), httpLoggingInterceptor = get()) }
     single { provideRetrofit(okHttpClient = get(), provideRxAdapter = get()) }
+
     single { provideApiService(get()) }
+
     single { provideSharedPref(androidContext()) }
     single { provideRxAdapter() }
     single { provideHttpLoggingInterceptor() }
     single { provideInterceptor(get(), androidContext()) }
-    single { provideApiHelper(get()) }  //как синглтон есть еще factory — Предоставление зависимости как фабричный компонент, т.е. создает каждый раз новый экземпляр
+
+    single<BaseFeatureHolder> {
+        return@single provideAccountFeatureHolder(androidContext())
+    } //как синглтон есть еще factory — Предоставление зависимости как фабричный компонент, т.е. создает каждый раз новый экземпляр
 
     single<ApiHelper> {
         return@single ApiHelperImpl(apiService = get())
     }
 }
 
+private fun provideAccountFeatureHolder(context: Context): AccountFeatureHolderTest {
+    return AccountFeatureHolderTest(context)
+}
+
 private fun provideApiService(retrofit: Retrofit): ApiService =
     retrofit.create(ApiService::class.java)  //любая апи
 
-private fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
 
 private fun provideRetrofit(
     okHttpClient: OkHttpClient,

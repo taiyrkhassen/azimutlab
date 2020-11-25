@@ -23,7 +23,7 @@ class MainRepositoryImpl(
 
     @SuppressLint("CheckResult")
     override fun getPosts(): Observable<List<PostModel>> {
-        return apiHelper.getPostJson()
+        return apiHelper.getPostJson(screenId = 212)
             .flatMap {
                 if (it.isSuccessful) {
                     addToCash(it.body() ?: emptyList())
