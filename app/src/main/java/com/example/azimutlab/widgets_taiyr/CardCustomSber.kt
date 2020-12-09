@@ -2,6 +2,8 @@ package com.example.azimutlab.widgets_taiyr
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +18,7 @@ class CardCustomSber : LinearLayout {
             if (value == null) {
                 cardTitle.visibility = View.GONE
             } else {
+                cardTitle.visibility = View.VISIBLE
                 cardTitle.text = value
             }
 
@@ -27,10 +30,15 @@ class CardCustomSber : LinearLayout {
             if (value == null) {
                 hintTitle.visibility = View.GONE
             } else {
-                if (cardTitleText == null && moneyText == null) {
+                if(cardTitleText.isNullOrBlank() && moneyText.isNullOrBlank()){
+                    Log.d("here", "hintTyle view")
                     hintTitle.visibility = View.VISIBLE
+                    hintTitle.apply {
+                        setTextSize(TypedValue.COMPLEX_UNIT_PX, spToPx(17f).toFloat())
+                    }
+
                     hintTitle.text = value
-                    // razmer uvelichit
+                    cardImage.setImageResource(R.drawable.ic_hint_card)
                 } else {
                     hintTitle.visibility = View.VISIBLE
                     hintTitle.text = value
@@ -43,6 +51,7 @@ class CardCustomSber : LinearLayout {
             if (value == null) {
                 nameAdditional.visibility = View.GONE
             } else {
+                nameAdditional.visibility = View.VISIBLE
                 nameAdditional.text = value
             }
         }
@@ -53,6 +62,7 @@ class CardCustomSber : LinearLayout {
             if (value == null) {
                 moneySum.visibility = View.GONE
             } else {
+                moneySum.visibility = View.VISIBLE
                 moneySum.text = value
             }
 
@@ -64,50 +74,33 @@ class CardCustomSber : LinearLayout {
             if (value == null) {
                 errorText.visibility = View.GONE
             } else {
+                errorText.visibility = View.VISIBLE
                 errorText.text = value
             }
         }
 
-//    var hasHintTitle: Boolean
-//        get() = hintTitle.visibility == View.VISIBLE
-//        set(value) {
-//            if (value) {
-//                hintTitle.visibility = View.VISIBLE
-//            } else {
-//                hintTitle.visibility = View.GONE
-//            }
-//        }
-//
-//    var hasDivider: Boolean
-//        get() = divider.visibility == View.VISIBLE
-//        set(value) {
-//            if (value) {
-//                divider.visibility = View.VISIBLE
-//            } else {
-//                divider.visibility = View.GONE
-//            }
-//        }
-
-//    var hasError: Boolean
-//        get() = errorText.visibility == View.VISIBLE
-//        set(value) {
-//            if (value) {
-//                errorText.visibility = View.VISIBLE
-//            } else {
-//                errorText.visibility = View.GONE
-//            }
-//        }
+    var hasDivider: Boolean
+        get() = divider.visibility == View.VISIBLE
+        set(value) {
+            if (value) {
+                divider.visibility = View.VISIBLE
+            } else {
+                divider.visibility = View.GONE
+            }
+        }
 
 
-    lateinit var hintTitle: TextView
-    lateinit var errorText: TextView
-    lateinit var cardTitle: TextView
-    lateinit var cardHintInfo: TextView
-    lateinit var moneySum: TextView
-    lateinit var divider: View
-    lateinit var mainContainer: ConstraintLayout
-    lateinit var cardImage: ImageView
-    lateinit var nameAdditional: TextView
+    private lateinit var hintTitle: TextView
+    private lateinit var errorText: TextView
+    private lateinit var cardTitle: TextView
+    private lateinit var cardHintInfo: TextView
+    private lateinit var moneySum: TextView
+    private lateinit var divider: View
+    private lateinit var mainContainer: ConstraintLayout
+    private lateinit var cardImage: ImageView
+    private lateinit var arrowImage: ImageView
+    private lateinit var mainLayout: LinearLayout
+    private lateinit var nameAdditional: TextView
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -115,12 +108,14 @@ class CardCustomSber : LinearLayout {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init(context, attrs)
-
     }
 
     private fun init(context: Context, attrs: AttributeSet) {
         init(context)
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CardCustomSber)
+        val typedArray = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.CardCustomSber
+        )
         cardTitle.text = typedArray.getText(R.styleable.CardCustomSber_titleCard)
         hintTitle.apply {
             if (typedArray.getBoolean(R.styleable.CardCustomSber_hasHintTitle, false)) {
@@ -147,12 +142,19 @@ class CardCustomSber : LinearLayout {
                 View.VISIBLE else View.GONE
         }
         cardImage.apply {
-            setImageResource(
-                typedArray.getResourceId(
-                    R.styleable.CardCustomSber_cardImage,
-                    R.id.cardIcon
+            setImageDrawable(
+                typedArray.getDrawable(
+                    R.styleable.CardCustomSber_cardImage
                 )
             )
+        }
+        arrowImage.apply {
+            visibility = if (typedArray.getBoolean(
+                    R.styleable.CardCustomSber_hasArrow,
+                    true
+                )
+            ) View.VISIBLE else View.GONE
+
         }
         moneySum.apply {
             text = typedArray.getText(R.styleable.CardCustomSber_moneySum)
@@ -170,14 +172,14 @@ class CardCustomSber : LinearLayout {
         cardHintInfo = findViewById(R.id.hintTitle)
         moneySum = findViewById(R.id.moneySum)
         mainContainer = findViewById(R.id.mainContent)
+        mainLayout = findViewById(R.id.mainLayout)
+        arrowImage = findViewById(R.id.arrow_down)
         cardImage = findViewById(R.id.cardIcon)
         nameAdditional = findViewById(R.id.nameAdditional)
         divider = findViewById(R.id.divider)
-        mainContainer.setOnClickListener {
-
-        }
 
     }
+
 
     fun setCardImage(resId: Int = R.drawable.ic_card_2) {
         cardImage.visibility = View.VISIBLE
@@ -185,7 +187,7 @@ class CardCustomSber : LinearLayout {
     }
 
     fun setClick(function: () -> Unit) {
-        mainContainer.setOnClickListener {
+        mainLayout.setOnClickListener {
             function()
         }
     }

@@ -12,5 +12,6 @@
     <color name="colorHint">#8C000000</color>
     <color name="colorDivider">#F0F0F0</color>
     <color name="colorError">#F6650A</color>
+    <color name="warningColor">#333399</color>
 
 </resources>

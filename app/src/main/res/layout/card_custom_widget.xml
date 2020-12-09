@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
+    android:background="?android:attr/selectableItemBackground"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
@@ -26,7 +28,6 @@
         android:layout_marginLeft="32dp">
 
         <TextView
-            app:fontFamily="@font/roboto"
             android:id="@+id/hintTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
             android:textColor="@color/colorHint"
             android:textSize="14sp"
             android:visibility="gone"
+            app:fontFamily="@font/roboto"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Счет списания" />
@@ -50,34 +52,33 @@
             tools:text="VISA ALL IN" />
 
         <TextView
-            app:fontFamily="@font/roboto"
+            android:id="@+id/nameAdditional"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:textColor="@color/colorHint"
             android:textSize="14sp"
-            android:id="@+id/nameAdditional"
+            app:fontFamily="@font/roboto"
+            app:layout_constraintBottom_toBottomOf="@+id/title_card"
             app:layout_constraintStart_toEndOf="@+id/title_card"
             app:layout_constraintTop_toTopOf="@+id/title_card"
-            app:layout_constraintBottom_toBottomOf="@+id/title_card"
-            android:layout_marginStart="4dp"
-            tools:text="•• 6789 • кредитная"
-            android:layout_marginLeft="4dp" />
+            tools:text="•• 6789 • кредитная" />
 
         <TextView
-            app:fontFamily="@font/roboto"
             android:id="@+id/moneySum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:textColor="@color/black"
             android:textSize="16sp"
+            app:fontFamily="@font/roboto"
             app:layout_constraintTop_toBottomOf="@+id/title_card"
-            tools:text="10 000 ₸"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:text="10 000 ₸" />
 
 
         <View
-            android:visibility="gone"
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -85,32 +86,35 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@color/colorDivider"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/moneySum" />
 
         <ImageView
+            android:id="@+id/arrow_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="visible"
             android:layout_marginEnd="23dp"
             android:layout_marginRight="23dp"
             android:src="@drawable/ic_arrow_down"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/title_card"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/title_card" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/errorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:maxWidth="272dp"
             android:fontFamily="@font/roboto"
+            android:maxWidth="272dp"
             android:textColor="@color/colorError"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:text="С этого счета списывается ежемесячный платеж на ваш кредит. Необходимо снова пополнить его"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:text="С этого счета списывается ежемесячный платеж на ваш кредит. Необходимо снова пополнить его" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
